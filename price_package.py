@@ -1,4 +1,3 @@
-import requests
 from bs4 import BeautifulSoup
 import asyncio
 import httpx
@@ -29,7 +28,7 @@ async def get_url(url):
 
 
 async def check_price_btc():
-    soup = get_url(url_btc)
+    soup = await get_url(url_btc)
     price_btc = soup.find(class_='cmc-details-panel-price__price').get_text()
     price_btc = price_btc.replace(',','')
     converted_price_btc = float(price_btc[1:])
@@ -39,7 +38,7 @@ async def check_price_btc():
 
 
 async def check_price_xrp():
-    soup = get_url(url_xrp)
+    soup = await get_url(url_xrp)
     price_xrp = soup.find(class_='cmc-details-panel-price__price').get_text()
     price_xrp = price_xrp.replace(',','')
     converted_price_xrp = float(price_xrp[1:])
@@ -49,7 +48,7 @@ async def check_price_xrp():
 
 
 async def check_price_xlm():
-    soup = get_url(url_xlm)
+    soup = await get_url(url_xlm)
     price_xlm = soup.find(class_='cmc-details-panel-price__price').get_text()
     price_xlm = price_xlm.replace(',','')
     converted_price_xlm = float(price_xlm[1:])
@@ -59,7 +58,7 @@ async def check_price_xlm():
 
 
 async def check_price_gld():
-    soup = get_url(url_gld)
+    soup = await get_url(url_gld)
     price_gld = soup.find(class_='table-price--body-table--overview-bid').get_text()
     price_gld = price_gld[5:13].replace(',', '')
     converted_price_gld = float(price_gld[:])

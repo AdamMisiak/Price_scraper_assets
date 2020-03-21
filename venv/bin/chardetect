@@ -1,4 +1,4 @@
-#!/home/adam/Pulpit/Projekty/package/venv/bin/python3
+#!/home/adam/Pulpit/Projekty/Price_package/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
