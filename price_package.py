@@ -5,6 +5,11 @@ from starlette.responses import JSONResponse
 from starlette.routing import Route
 from starlette.applications import Starlette
 
+#HW jquery sprawdzic czy przesyla
+#summary czy bedzi dzialac
+#docker compose
+#https://git-scm.com/book/it/v2/Git-Tools-Submodules
+
 
 url_btc = 'https://coinmarketcap.com/currencies/bitcoin/'
 url_xlm = 'https://coinmarketcap.com/currencies/stellar/'
@@ -12,13 +17,11 @@ url_xrp = 'https://coinmarketcap.com/currencies/xrp/'
 url_gld = 'https://www.kitco.com/gold-price-today-usa/'
 url_usd = 'https://transferwise.com/pl/currency-converter/usd-to-pln-rate'
 
-headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36'}
+headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                          'Chrome/79.0.3945.117 Safari/537.36'}
 
 
 async def get_url(url):
-    # page = requests.get(url, headers = headers)
-    # soup = BeautifulSoup(page.content, 'html.parser')
-    # return soup
     async with httpx.AsyncClient() as client:
         response = await client.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -64,6 +67,14 @@ async def check_price_gld():
     print(converted_price_gld)
     return converted_price_gld
 
+async def check_price_usd():
+    soup = await get_url(url_usd)
+    price_usd = soup.find(class_='text-success').get_text()
+    price_usd = price_usd.replace(',','.')
+    converted_price_usd = float(price_usd)
+    converted_price_usd = round(converted_price_usd,3)
+    return converted_price_usd
+
 
 # def async_prices():
 #     many = asyncio.gather(check_price_btc(),check_price_xrp(),check_price_xlm(),check_price_gld())
@@ -72,9 +83,10 @@ async def check_price_gld():
 
 
 async def check_prices(request):
-    prices = await asyncio.gather(check_price_btc(), check_price_xrp(), check_price_xlm(), check_price_gld())
+    prices = await asyncio.gather(check_price_btc(), check_price_xrp(), check_price_xlm(), check_price_gld(),
+                                  check_price_usd())
     print(prices)
-    return JSONResponse({'BTC':prices[0],'XRP':prices[1],'XLM':prices[2],'GLD':prices[3]})
+    return JSONResponse({'BTC':prices[0],'XRP':prices[1],'XLM':prices[2],'GLD':prices[3],'USD':prices[4]})
 
 routes = [Route('/', check_prices)]
 
