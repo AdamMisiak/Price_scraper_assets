@@ -5,11 +5,6 @@ from starlette.responses import JSONResponse
 from starlette.routing import Route
 from starlette.applications import Starlette
 
-#HW jquery sprawdzic czy przesyla
-#summary czy bedzi dzialac
-#docker compose
-#https://git-scm.com/book/it/v2/Git-Tools-Submodules
-
 
 url_btc = 'https://coinmarketcap.com/currencies/bitcoin/'
 url_xlm = 'https://coinmarketcap.com/currencies/stellar/'
