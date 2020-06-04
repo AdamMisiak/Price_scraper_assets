@@ -9,4 +9,4 @@ RUN pip3 install -r /var/www/requirements.txt
 
 WORKDIR /var/www/
 
-CMD ["uvicorn", "price_package:app", "--host", "0.0.0.0", "--port", "5000"]
+CMD ["uvicorn", "price_package:app", "--host", "0.0.0.0", "--port", "5555"]
